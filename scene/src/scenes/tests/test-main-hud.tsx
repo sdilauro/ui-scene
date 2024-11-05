@@ -1,11 +1,7 @@
 import ReactEcs, { ReactEcsRenderer } from '@dcl/sdk/react-ecs'
 import MainHud from '../../ui/main-hud/mainHudComponent'
 import { openExternalUrl } from '~system/RestrictedActions'
-import {
-  CharacterClasses,
-  CharacterAlliances,
-  CharacterRaces
-} from '../../ui/creation-player/creationPlayerData'
+
 
 export class UI {
   public isVisible: boolean
@@ -27,12 +23,7 @@ export class UI {
         isInfoOpen={this.isInfoOpen}
         playerRollOnClick={this.playerRollVisibility.bind(this)}
         showInfo={this.showInfo.bind(this)}
-        showInventory={() => null}
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         openLink={this.openLink.bind(this)}
-        characterRace={CharacterRaces.CR_ELF}
-        characterClass={CharacterClasses.CC_CLERIC}
-        characterAlliance={CharacterAlliances.CF_REBELS}
         lastRoll={{
           gainedExperience: 25,
           playerRoll: 12,
