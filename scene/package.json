@@ -6,7 +6,7 @@
     "start": "sdk-commands start",
     "deploy": "sdk-commands deploy",
     "build": "sdk-commands build",
-    "export-static": "sdk-commands export-static --destination static/ --realmName UI-Scene --baseUrl https://decentraland-scenes.github.io/UI-Scene/ --commsAdapter ws-room:ws-room-service.decentraland.org/rooms/UI-Scene",
+    "export-static": "sdk-commands export-static --destination static/ --realmName UI-Scene --baseUrl https://sdilauro.github.io/ui-scene/ --commsAdapter ws-room:ws-room-service.decentraland.org/rooms/ui-scene",
     "lint": "eslint ./**/*.{ts,tsx}",
     "lint:fix": "eslint --fix ./**/*.{ts,tsx}",
     "format": "prettier --config .prettierrc -c ./**/*.{ts,tsx}",
