@@ -23,7 +23,7 @@ export class UI {
         isInfoOpen={this.isInfoOpen}
         playerRollOnClick={this.playerRollVisibility.bind(this)}
         showInfo={this.showInfo.bind(this)}
-        openLink={this.openLink.bind(this)}
+        openLink={() => this.openLink.bind(this)}
         lastRoll={{
           gainedExperience: 25,
           playerRoll: 12,
