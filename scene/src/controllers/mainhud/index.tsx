@@ -12,7 +12,6 @@ export class MainHudController {
   public lastEnemyRoll: number = 0
   public gainedXP: number = 0
 
-
   render(): ReactEcs.JSX.Element {
     return (
       <UiEntity>

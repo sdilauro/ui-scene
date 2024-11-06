@@ -10,7 +10,6 @@ import {
   type playersProfessionsType
 } from './mainHudData'
 
-
 type MainHudProps = {
   isPlayerRollOpen: boolean
   isInfoOpen: boolean
@@ -81,8 +80,8 @@ function MainHud({
             }
           }}
           onMouseDown={() => {
-              console.log('Hi')  
-            }}
+            console.log('Hi')
+          }}
         />
         <UiEntity
           uiTransform={{
@@ -162,8 +161,7 @@ function MainHud({
                 height: hudHeight * 1.3,
                 justifyContent: 'space-around'
               }}
-            >
-            </UiEntity>
+            ></UiEntity>
             <UiEntity
               uiTransform={{
                 flexDirection: 'column',

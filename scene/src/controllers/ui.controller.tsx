@@ -1,12 +1,9 @@
-
 import ReactEcs, { ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
 import { LoadingUI } from '../ui/loading/loading'
 import { type GameController } from './game.controller'
 import { MainHudController } from './mainhud'
 import Canvas from '../ui/canvas/canvas'
 import * as ui from 'dcl-ui-toolkit'
-
-
 
 export class UIController {
   loadingUI: LoadingUI
@@ -18,7 +15,7 @@ export class UIController {
   constructor(gameController: GameController) {
     this.gameController = gameController
     this.loadingUI = new LoadingUI(this)
-    
+
     ReactEcsRenderer.setUiRenderer(this.ui.bind(this))
   }
 
@@ -26,8 +23,6 @@ export class UIController {
     this.mainHud = new MainHudController()
   }
 
-
-  
   ui(): ReactEcs.JSX.Element {
     return (
       <UiEntity>

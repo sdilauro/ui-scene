@@ -2,7 +2,6 @@ import ReactEcs, { ReactEcsRenderer } from '@dcl/sdk/react-ecs'
 import MainHud from '../../ui/main-hud/mainHudComponent'
 import { openExternalUrl } from '~system/RestrictedActions'
 
-
 export class UI {
   public isVisible: boolean
   public isPlayerRollOpen: boolean
