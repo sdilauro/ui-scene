@@ -3,8 +3,8 @@ import ReactEcs, { UiEntity } from '@dcl/sdk/react-ecs'
 import { getUvs, type Sprite } from '../../utils/ui-utils'
 import Canvas from '../canvas/canvas'
 import {
-  DISCORD_URL,
-  TWITTER_URL,
+  DCL_EXPLORER_URL,
+  HELP_URL,
   mainHudSprites,
   type lastRollType,
   type playersProfessionsType
@@ -336,7 +336,7 @@ function MainHud({
               }
             }}
             onMouseDown={() => {
-              openLink(DISCORD_URL)
+              openLink(DCL_EXPLORER_URL)
             }}
           />
           <UiEntity
@@ -354,7 +354,7 @@ function MainHud({
               }
             }}
             onMouseDown={() => {
-              openLink(TWITTER_URL)
+              openLink(HELP_URL)
             }}
           />
         </UiEntity>
