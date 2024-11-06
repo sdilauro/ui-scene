@@ -1,9 +1,9 @@
 import ReactEcs, { ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
 import { LoadingUI } from '../ui/loading-and-login/loading'
 import { type GameController } from './game.controller'
-import { MainHudController } from './mainhud'
-import Canvas from '../ui/canvas/canvas'
-import * as ui from 'dcl-ui-toolkit'
+import { type MainHudController } from './mainhud'
+// import Canvas from '../ui/canvas/canvas'
+// import * as ui from 'dcl-ui-toolkit'
 import { BottomButtonsController } from './bottomButtons'
 
 export class UIController {

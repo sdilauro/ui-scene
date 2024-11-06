@@ -1,6 +1,4 @@
-import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { Color4 } from '@dcl/sdk/math'
-import { getGreater } from './ui-utils'
 
 // COLORS
 export const PRIMARY_COLOR: Color4 = Color4.create(1, 0.1765, 0.33, 1)

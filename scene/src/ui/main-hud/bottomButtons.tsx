@@ -1,10 +1,9 @@
 import { UiEntity } from '@dcl/react-ecs'
 import { ReactEcs } from '@dcl/react-ecs/dist/react-ecs'
 import { engine, UiCanvasInformation } from '@dcl/sdk/ecs'
-import { getGreater, Sprite } from '../../utils/ui-utils'
-import Canvas from '../canvas/canvas'
-import { mainHudSprites } from './mainHudData'
 import { Color4 } from '@dcl/sdk/math'
+import { getGreater } from '../../utils/ui-utils'
+import Canvas from '../canvas/canvas'
 
 type BottomButtonsProps = {
   gesturesWheelVisible: boolean

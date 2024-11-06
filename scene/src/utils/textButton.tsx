@@ -1,6 +1,10 @@
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import { Color4 } from '@dcl/sdk/math'
-import ReactEcs, { Callback, UiEntity, UiTransformProps } from '@dcl/sdk/react-ecs'
+import ReactEcs, {
+  type Callback,
+  UiEntity,
+  type UiTransformProps
+} from '@dcl/sdk/react-ecs'
 import { getGreater } from './ui-utils'
 
 function TextButton(props: {
@@ -19,7 +23,7 @@ function TextButton(props: {
   if (canvasInfo === null) return null
 
   const BUTTON_MARGIN = getGreater(canvasInfo.height * 0.01, 2.5)
-  const ICON_MARGIN = getGreater(canvasInfo.height * 0.01, 2)
+  //   const ICON_MARGIN = getGreater(canvasInfo.height * 0.01, 2)
 
   return (
     <UiEntity
@@ -45,28 +49,34 @@ function TextButton(props: {
       }}
       onMouseDown={props.callback}
     >
-      
       {/* TEXT */}
       <UiEntity
         uiTransform={{
           width: 'auto',
           height: 'auto'
         }}
-        uiText={{ value: props.text, fontSize: props.fontSize, color:props.textColor?props.textColor:Color4.White() }}
+        uiText={{
+          value: props.text,
+          fontSize: props.fontSize,
+          color: props.textColor ?? Color4.White()
+        }}
       >
         {/* ICON */}
-      {props.isLoading && (
-        <UiEntity
-          uiTransform={{
-            width: props.fontSize,
-            height: props.fontSize,
-            positionType: 'absolute',
-            position:{top:'25%', left:-1.25*props.fontSize}
-          }}
-          uiBackground={{ textureMode:'stretch', texture:{src:'assets/images/Spinner.png'} }}
-        />
-      )}
-        </UiEntity>
+        {props.isLoading && (
+          <UiEntity
+            uiTransform={{
+              width: props.fontSize,
+              height: props.fontSize,
+              positionType: 'absolute',
+              position: { top: '25%', left: -1.25 * props.fontSize }
+            }}
+            uiBackground={{
+              textureMode: 'stretch',
+              texture: { src: 'assets/images/Spinner.png' }
+            }}
+          />
+        )}
+      </UiEntity>
     </UiEntity>
   )
 }
