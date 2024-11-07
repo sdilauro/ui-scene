@@ -13,7 +13,7 @@ async function init(retry: boolean): Promise<void> {
   gameInstance = new GameController()
   gameInstance.uiController.loadingUI.startLoading()
 
-  // UI
-  gameInstance.uiController.loadingUI.finishLoading()
-  gameInstance.uiController.showMainHud()
+  // // UI
+  // gameInstance.uiController.loadingUI.finishLoading()
+  gameInstance.uiController.showBottomButtons()
 }
