@@ -88,22 +88,3 @@ export const INPUT_KEYS_ARRAY: SlotsInputs[] = [
   InputAction.IA_ACTION_5,
   InputAction.IA_ACTION_6
 ]
-
-export function getGreater(
-  a: number | undefined,
-  b: number | undefined
-): number {
-  if (a === undefined && b !== undefined) {
-    return b
-  }
-  if (b === undefined && a !== undefined) {
-    return a
-  }
-  if (a !== undefined && b !== undefined) {
-    if (a > b) {
-      return a
-    }
-    return b
-  }
-  return 0
-}

@@ -5,7 +5,6 @@ import ReactEcs, {
   UiEntity,
   type UiTransformProps
 } from '@dcl/sdk/react-ecs'
-import { getGreater } from './ui-utils'
 
 function TextButton(props: {
   uiTransform: UiTransformProps
@@ -22,8 +21,8 @@ function TextButton(props: {
   const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   if (canvasInfo === null) return null
 
-  const BUTTON_MARGIN = getGreater(canvasInfo.height * 0.01, 2.5)
-  //   const ICON_MARGIN = getGreater(canvasInfo.height * 0.01, 2)
+  const BUTTON_MARGIN = Math.max(canvasInfo.height * 0.01, 2.5)
+  //   const ICON_MARGIN = Math.max(canvasInfo.height * 0.01, 2)
 
   return (
     <UiEntity
@@ -41,10 +40,10 @@ function TextButton(props: {
           src: 'assets/images/buttonBackground100.png'
         },
         textureSlices: {
-          top: 0.375,
-          bottom: 0.375,
-          left: 0.375,
-          right: 0.375
+          top: 0.25,
+          bottom: 0.25,
+          left: 0.25,
+          right: 0.25
         }
       }}
       onMouseDown={props.callback}

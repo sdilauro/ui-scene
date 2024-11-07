@@ -2,7 +2,6 @@ import { UiEntity } from '@dcl/react-ecs'
 import { ReactEcs } from '@dcl/react-ecs/dist/react-ecs'
 import { engine, UiCanvasInformation } from '@dcl/sdk/ecs'
 import { Color4 } from '@dcl/sdk/math'
-import { getGreater } from '../../utils/ui-utils'
 import Canvas from '../canvas/canvas'
 
 type BottomButtonsProps = {
@@ -19,7 +18,7 @@ function BottomButtons({
   const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   if (canvasInfo === null) return null
 
-  const hudHeight: number = getGreater(canvasInfo.height * 0.03, 32)
+  const hudHeight: number = Math.max(canvasInfo.height * 0.03, 32)
   let chatIconSpriteUrl: string
   if (chatVisible) {
     chatIconSpriteUrl = 'assets/images/SettingsOn.png'

@@ -7,13 +7,14 @@ import { type UIController } from '../../controllers/ui.controller'
 import {
   CLICKED_PRIMARY_COLOR,
   DCL_DAO_EXPLORERS_DS,
-  FAKE_WHITE_COLOR,
-  PRIMARY_COLOR,
+  ALMOST_WHITE,
+  RUBY,
   SECONDARY_COLOR
 } from '../../utils/constants'
-import TextButton from '../../utils/textButton'
-import { getGreater } from '../../utils/ui-utils'
+import TextButton from '../../components/textButton'
 import Canvas from '../canvas/canvas'
+import TextIconButton from '../../components/textIconButton'
+import ArrowToast from '../../components/arrowToast'
 
 export class LoadingUI {
   private status:
@@ -21,7 +22,7 @@ export class LoadingUI {
     | 'menu'
     | 'secure-step'
     | 'fetching-data'
-    | 'ready-to-start' = 'loading'
+    | 'ready-to-start' = 'secure-step'
 
   private startIsClicked: boolean = false
   private isVisible: boolean
@@ -35,7 +36,7 @@ export class LoadingUI {
   }
 
   startLoading(): void {
-    this.status = 'loading'
+    this.status = 'secure-step'
     this.isVisible = true
   }
 
@@ -55,14 +56,14 @@ export class LoadingUI {
     const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
     if (canvasInfo === null) return null
 
-    const LOGO_SIZE: number = getGreater(canvasInfo.height * 0.1, 64)
+    const LOGO_SIZE: number = Math.max(canvasInfo.height * 0.1, 64)
 
     // FONT SIZES
-    const TITLE_FONT_SIZE: number = getGreater(canvasInfo.height * 0.036, 36)
-    const SUBTITLE_FONT_SIZE: number = getGreater(canvasInfo.height * 0.03, 30)
-    const PARAGRAPH_FONT_SIZE: number = getGreater(canvasInfo.height * 0.02, 20)
-    const BUTTON_FONT_SIZE: number = getGreater(canvasInfo.height * 0.018, 18)
-    const CODE_FONT_SIZE: number = getGreater(canvasInfo.height * 0.1, 100)
+    const TITLE_FONT_SIZE: number = Math.max(canvasInfo.height * 0.036, 36)
+    const SUBTITLE_FONT_SIZE: number = Math.max(canvasInfo.height * 0.03, 30)
+    const PARAGRAPH_FONT_SIZE: number = Math.max(canvasInfo.height * 0.02, 20)
+    const BUTTON_FONT_SIZE: number = Math.max(canvasInfo.height * 0.018, 18)
+    const CODE_FONT_SIZE: number = Math.max(canvasInfo.height * 0.1, 100)
 
     // BUTTON SIZES
     const BUTTON_HIGHT: number = BUTTON_FONT_SIZE * 3
@@ -193,7 +194,7 @@ export class LoadingUI {
                   width: BUTTON_WIDTH,
                   height: BUTTON_HIGHT
                 }}
-                normalColor={PRIMARY_COLOR}
+                normalColor={RUBY}
                 clickedColor={CLICKED_PRIMARY_COLOR}
                 isClicked={this.startIsClicked}
                 isLoading={this.startIsClicked}
@@ -231,7 +232,7 @@ export class LoadingUI {
                 <UiEntity
                   uiTransform={{
                     height: BUTTON_HIGHT,
-                    margin: getGreater(canvasInfo.height * 0.01, 2.5)
+                    margin: Math.max(canvasInfo.height * 0.01, 2.5)
                   }}
                 />
               )}
@@ -254,15 +255,16 @@ export class LoadingUI {
                 }
               }}
             >
-              <TextButton
+              <TextIconButton
                 uiTransform={{
-                  width: BUTTON_HIGHT * 0.7 * 2,
+                  width: BUTTON_HIGHT * 3,
                   height: BUTTON_HIGHT * 0.7
                 }}
-                normalColor={FAKE_WHITE_COLOR}
-                clickedColor={FAKE_WHITE_COLOR}
+                normalColor={ALMOST_WHITE}
+                clickedColor={ALMOST_WHITE}
                 isClicked={false}
-                isLoading={false}
+                iconColor={RUBY}
+                iconSrc={'assets/images/icons/LeftArrow.png'}
                 callback={() => {
                   this.startIsClicked = false
                   console.log('click back')
@@ -284,19 +286,21 @@ export class LoadingUI {
                   fontSize: TITLE_FONT_SIZE,
                   textAlign: 'middle-left'
                 }}
+                uiBackground={{ color: Color4.Blue() }}
               />
 
               <UiEntity
                 uiTransform={{
                   width: '100%',
-                  height: PARAGRAPH_FONT_SIZE * 3.5
+                  height: 'auto'
                 }}
                 uiText={{
                   value:
                     'Remember the verification number below.\nYou’ll be prompted to confirm it in your\nweb browser to securely link your sign in.',
                   fontSize: PARAGRAPH_FONT_SIZE,
-                  textAlign: 'middle-left'
+                  textAlign: 'top-left'
                 }}
+                uiBackground={{ color: Color4.Red() }}
               />
               <UiEntity
                 uiTransform={{
@@ -304,30 +308,46 @@ export class LoadingUI {
                   height: CODE_FONT_SIZE,
                   justifyContent: 'flex-start',
                   alignItems: 'center',
-                  flexDirection: 'row',
-                  margin: { top: CODE_FONT_SIZE * 0.25 }
+                  flexDirection: 'row'
+                  // margin: { top: CODE_FONT_SIZE * 0.25 }
                 }}
               >
                 <UiEntity
                   uiTransform={{
-                    width: 'auto',
-                    height: CODE_FONT_SIZE
+                    width: CODE_FONT_SIZE,
+                    height: CODE_FONT_SIZE,
+                    margin: { left: PARAGRAPH_FONT_SIZE * 0.5 }
                   }}
                   uiText={{
                     value: '29',
                     fontSize: CODE_FONT_SIZE,
-                    textAlign: 'bottom-left'
+                    textAlign: 'middle-center',
+                    font: 'monospace'
                   }}
+                  uiBackground={{ color: Color4.Blue() }}
                 />
                 <UiEntity
                   uiTransform={{
                     width: PARAGRAPH_FONT_SIZE,
-                    height: PARAGRAPH_FONT_SIZE
+                    height: PARAGRAPH_FONT_SIZE,
+                    margin: { left: PARAGRAPH_FONT_SIZE *5 }
                   }}
                   uiBackground={{
                     textureMode: 'stretch',
                     texture: { src: 'assets/images/InfoButton.png' }
                   }}
+                />
+                <ArrowToast
+                  uiTransform={{
+                    width: CODE_FONT_SIZE * 15,
+                    height: CODE_FONT_SIZE,
+                    margin: { left: PARAGRAPH_FONT_SIZE }
+                  }}
+                  text={
+                    // 'Keep this number private. It ensures that your sign-in is secure and unique to you.'
+                    'toast'
+                  }
+                  fontSize={PARAGRAPH_FONT_SIZE * 0.7}
                 />
               </UiEntity>
               <UiEntity
