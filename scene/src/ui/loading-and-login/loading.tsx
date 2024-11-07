@@ -9,7 +9,8 @@ import {
   DCL_DAO_EXPLORERS_DS,
   ALMOST_WHITE,
   RUBY,
-  SECONDARY_COLOR
+  SECONDARY_COLOR,
+  ALMOST_BLACK
 } from '../../utils/constants'
 import TextButton from '../../components/textButton'
 import Canvas from '../canvas/canvas'
@@ -22,11 +23,13 @@ export class LoadingUI {
     | 'menu'
     | 'secure-step'
     | 'fetching-data'
-    | 'ready-to-start' = 'secure-step'
+    | 'ready-to-start' = 'loading'
 
   private startIsClicked: boolean = false
   private isVisible: boolean
+  private toastOpen: boolean = false
   readonly countDown: string = '5:00'
+  readonly playerName: string = 'Name'
   public timer: number = 2
   private readonly uiController: UIController
 
@@ -36,16 +39,23 @@ export class LoadingUI {
   }
 
   startLoading(): void {
-    this.status = 'secure-step'
+    this.status = 'loading'
     this.isVisible = true
   }
 
   finishLoading(): void {
-    this.status = 'menu'
+    this.isVisible = false
   }
 
   visible(): boolean {
     return this.isVisible
+  }
+
+  fetchData():void {
+    this.status = 'fetching-data'
+    utils.timers.setTimeout(() => {
+      this.status = 'ready-to-start'
+    }, 500)
   }
 
   async openLink(url: string): Promise<void> {
@@ -71,7 +81,7 @@ export class LoadingUI {
 
     return (
       <Canvas>
-        <UiEntity
+        {this.isVisible && <UiEntity
           uiTransform={{
             width: '100%',
             height: '100%',
@@ -115,7 +125,7 @@ export class LoadingUI {
                   width: '150',
                   height: '30',
                   positionType: 'absolute',
-                  position: { bottom: '5%', right: '5%' }
+                  position: { top: '5%', right: '5%' }
                 }}
                 uiBackground={{ color: Color4.create(0, 0, 0, 0.1) }}
                 uiText={{ value: 'skip loading screen' }}
@@ -200,6 +210,7 @@ export class LoadingUI {
                 isLoading={this.startIsClicked}
                 callback={() => {
                   this.startIsClicked = true
+                  this.toastOpen = false
                   console.log('click start')
                   utils.timers.setTimeout(() => {
                     this.status = 'secure-step'
@@ -239,6 +250,7 @@ export class LoadingUI {
             </UiEntity>
           )}
           {this.status === 'secure-step' && (
+            
             <UiEntity
               uiTransform={{
                 width: '100%',
@@ -255,9 +267,22 @@ export class LoadingUI {
                 }
               }}
             >
+              <UiEntity
+            uiTransform={{
+              width: '150',
+              height: '30',
+              positionType: 'absolute',
+              position: { top: '5%', right: '5%' }
+            }}
+            uiBackground={{ color: Color4.create(0, 0, 0, 0.1) }}
+            uiText={{ value: 'click YES in the verification window' }}
+            onMouseDown={() => {this.fetchData()
+             
+            }}
+          />
               <TextIconButton
                 uiTransform={{
-                  width: BUTTON_HIGHT * 3,
+                  width: BUTTON_HIGHT * 1.5,
                   height: BUTTON_HIGHT * 0.7
                 }}
                 normalColor={ALMOST_WHITE}
@@ -270,7 +295,9 @@ export class LoadingUI {
                   console.log('click back')
                   utils.timers.setTimeout(() => {
                     this.status = 'menu'
+                    this.toastOpen = false
                   }, 100)
+
                 }}
                 text={'BACK'}
                 fontSize={BUTTON_FONT_SIZE * 0.7}
@@ -286,7 +313,6 @@ export class LoadingUI {
                   fontSize: TITLE_FONT_SIZE,
                   textAlign: 'middle-left'
                 }}
-                uiBackground={{ color: Color4.Blue() }}
               />
 
               <UiEntity
@@ -300,16 +326,14 @@ export class LoadingUI {
                   fontSize: PARAGRAPH_FONT_SIZE,
                   textAlign: 'top-left'
                 }}
-                uiBackground={{ color: Color4.Red() }}
               />
               <UiEntity
                 uiTransform={{
-                  width: CODE_FONT_SIZE * 1.8,
+                  width: '100%',
                   height: CODE_FONT_SIZE,
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                   flexDirection: 'row'
-                  // margin: { top: CODE_FONT_SIZE * 0.25 }
                 }}
               >
                 <UiEntity
@@ -324,31 +348,38 @@ export class LoadingUI {
                     textAlign: 'middle-center',
                     font: 'monospace'
                   }}
-                  uiBackground={{ color: Color4.Blue() }}
                 />
                 <UiEntity
                   uiTransform={{
                     width: PARAGRAPH_FONT_SIZE,
                     height: PARAGRAPH_FONT_SIZE,
-                    margin: { left: PARAGRAPH_FONT_SIZE *5 }
+                    margin: { left: PARAGRAPH_FONT_SIZE },
+                    alignItems:'center',
+                    flexDirection:'row'
                   }}
                   uiBackground={{
                     textureMode: 'stretch',
                     texture: { src: 'assets/images/InfoButton.png' }
                   }}
-                />
-                <ArrowToast
-                  uiTransform={{
-                    width: CODE_FONT_SIZE * 15,
-                    height: CODE_FONT_SIZE,
-                    margin: { left: PARAGRAPH_FONT_SIZE }
-                  }}
-                  text={
-                    // 'Keep this number private. It ensures that your sign-in is secure and unique to you.'
-                    'toast'
-                  }
-                  fontSize={PARAGRAPH_FONT_SIZE * 0.7}
-                />
+                  onMouseDown={()=>{this.toastOpen = !this.toastOpen}}
+                >
+                  <ArrowToast
+                    uiTransform={{
+                      display:this.toastOpen?'flex':'none',
+                      width: CODE_FONT_SIZE * 2.2,
+                      height: CODE_FONT_SIZE * 0.75,
+                      positionType: 'absolute',
+                      position:{left: PARAGRAPH_FONT_SIZE}
+                    }}
+                    text={
+                      'Keep this number private. It ensures that your sign-in is secure and unique to you.'
+                    }
+                    fontSize={PARAGRAPH_FONT_SIZE * 0.7}
+                    arrowSide={'left'}
+                  />
+                  
+              </UiEntity>
+                
               </UiEntity>
               <UiEntity
                 uiTransform={{
@@ -366,6 +397,199 @@ export class LoadingUI {
               />
             </UiEntity>
           )}
+          {this.status === 'fetching-data' && (
+            <UiEntity
+              uiTransform={{
+                width: '100%',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                flexDirection: 'column',
+                padding: { left: '15%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                texture: {
+                  src: 'assets/images/login/HorizontalVioletGradient.png'
+                }
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  width: 2 * TITLE_FONT_SIZE * 5.3,
+                  height: 2 * TITLE_FONT_SIZE,
+                  display: 'flex',
+                  margin: { bottom: SUBTITLE_FONT_SIZE }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  texture: { src: 'assets/images/login/LogoWithText.png' }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  width: '100%',
+                  height: 'auto'
+                }}
+                uiText={{
+                  value: 'Discover a virtual social world',
+                  fontSize: TITLE_FONT_SIZE,
+                  textAlign: 'middle-left'
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  width: '100%',
+                  height: 'auto'
+                }}
+                uiText={{
+                  value: 'shaped by its community of',
+                  fontSize: SUBTITLE_FONT_SIZE,
+                  textAlign: 'middle-left'
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  width: '100%',
+                  height: 'auto',
+                  margin: { bottom: SUBTITLE_FONT_SIZE }
+                }}
+                uiText={{
+                  value: 'creators & explorers.',
+                  fontSize: SUBTITLE_FONT_SIZE,
+                  textAlign: 'middle-left'
+                }}
+              />
+
+            <UiEntity
+                  uiTransform={{
+                    width: BUTTON_WIDTH,
+                    height: 2 * BUTTON_HIGHT,
+                    margin: {
+                      top:Math.max(canvasInfo.height * 0.02, 5),
+                      bottom:Math.max(canvasInfo.height * 0.02, 5),
+                    },  
+                    flexDirection:'row',
+                    justifyContent:'center',
+                    alignItems:'center'
+                  }}
+                 
+                >
+                <UiEntity
+                uiTransform={{
+                  width: BUTTON_HIGHT,
+                  height: BUTTON_HIGHT,
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  texture: { src: 'assets/images/Spinner.png' }
+                }}
+              />
+              </UiEntity>
+            </UiEntity>
+          )}
+          {this.status === 'ready-to-start' && (
+            <UiEntity
+              uiTransform={{
+                width: '100%',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                flexDirection: 'column',
+                padding: { left: '15%' }
+              }}
+              uiBackground={{
+                textureMode: 'stretch',
+                texture: {
+                  src: 'assets/images/login/BackgroundsAvatarAlpha.png'
+                }
+              }}
+            >
+              <UiEntity
+                uiTransform={{
+                  width: CODE_FONT_SIZE * 4,
+                  height: CODE_FONT_SIZE * 4  / 2.68,
+                  positionType:'absolute',
+                  position:{bottom:'20%', right:'22.5%'}
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  texture: { src: 'assets/images/login/Platform.png' }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  width: 2 * TITLE_FONT_SIZE * 5.3,
+                  height: 2 * TITLE_FONT_SIZE,
+                  display: 'flex',
+                  margin: { bottom: SUBTITLE_FONT_SIZE }
+                }}
+                uiBackground={{
+                  textureMode: 'stretch',
+                  texture: { src: 'assets/images/login/LogoWithText.png' }
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  width: '100%',
+                  height: 'auto'
+                }}
+                uiText={{
+                  value: 'Welcome back '+ this.playerName,
+                  fontSize: TITLE_FONT_SIZE,
+                  textAlign: 'middle-left'
+                }}
+              />
+              <UiEntity
+                uiTransform={{
+                  width: '100%',
+                  height: 'auto'
+                }}
+                uiText={{
+                  value: 'Ready to explore?',
+                  fontSize: SUBTITLE_FONT_SIZE,
+                  textAlign: 'middle-left'
+                }}
+              />
+              <TextButton
+                uiTransform={{
+                  width: BUTTON_WIDTH,
+                  height: BUTTON_HIGHT
+                }}
+                normalColor={RUBY}
+                clickedColor={CLICKED_PRIMARY_COLOR}
+                isClicked={false}
+                isLoading={false}
+                callback={() => {
+                  this.finishLoading()
+                }}
+                text={'JUMP INTO DECENTRALAND'}
+                fontSize={BUTTON_FONT_SIZE}
+              />
+              <TextButton
+                uiTransform={{
+                  width: BUTTON_WIDTH,
+                  height: BUTTON_HIGHT
+                }}
+                normalColor={ALMOST_BLACK}
+                clickedColor={CLICKED_PRIMARY_COLOR}
+                isClicked={false}
+                isLoading={false}
+                callback={() => {
+                  this.startIsClicked = true
+                  this.toastOpen = false
+                  console.log('click start')
+                  utils.timers.setTimeout(() => {
+                    this.status = 'secure-step'
+                  }, 200)
+                }}
+                text={'USE A DIFFERENT ACCOUNT'}
+                fontSize={BUTTON_FONT_SIZE}
+              />
+              
+            </UiEntity>
+          )}
+
           {this.status !== 'loading' && (
             <UiEntity
               uiTransform={{
@@ -383,7 +607,7 @@ export class LoadingUI {
               }}
             />
           )}
-        </UiEntity>
+        </UiEntity>}
       </Canvas>
     )
   }

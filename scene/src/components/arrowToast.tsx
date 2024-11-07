@@ -1,72 +1,94 @@
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import ReactEcs, {
+  Position,
   UiEntity,
   type UiTransformProps
 } from '@dcl/sdk/react-ecs'
-import { ALMOST_BLACK, ALMOST_WHITE } from '../utils/constants'
+import { ALMOST_WHITE } from '../utils/constants'
 import { Color4 } from '@dcl/sdk/math'
 
 function ArrowToast(props: {
   uiTransform: UiTransformProps
   text: string
   fontSize: number
+  arrowSide: 'left' | 'right' | 'top' | 'bottom'
 }): ReactEcs.JSX.Element | null {
   const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   if (canvasInfo === null) return null
 
+  let position: Partial<Position> = { left: -props.fontSize * 0.8 }
+  if (props.arrowSide === 'left') position = { left: -props.fontSize * 0.8 }
+  if (props.arrowSide === 'right') position = { right: -props.fontSize * 0.8 }
+  if (props.arrowSide === 'top') position = { top: -props.fontSize * 0.8 }
+  if (props.arrowSide === 'bottom') position = { bottom: -props.fontSize * 0.8 }
+
   return (
     <UiEntity
       uiTransform={{
-        flexDirection: 'row',
+        flexDirection:
+          props.arrowSide === 'left' || props.arrowSide === 'right'
+            ? 'row'
+            : 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        margin: { left: props.fontSize },
         ...props.uiTransform
-      }}
-      uiBackground={{
-        color:Color4.Black(),
-        textureMode: 'nine-slices',
-        texture: {
-          src: 'assets/images/buttonBackground100.png'
-        },
-        textureSlices: {
-          top: 0.25,
-          bottom: 0.25,
-          left: 0.25,
-          right: 0.25
-        }
       }}
     >
       {/* ARROW */}
+
       <UiEntity
         uiTransform={{
-          width: props.fontSize * 3,
-          height: props.fontSize * 3,
+          width: props.fontSize * 2,
+          height: props.fontSize * 2,
           positionType: 'absolute',
-          position: { top: '30%', left: -props.fontSize * 1 }
+          position
         }}
         uiBackground={{
-          color: ALMOST_BLACK,
-          textureMode:'stretch',
+          color: Color4.Black(),
+          textureMode: 'stretch',
           texture: {
             src: 'assets/images/toastArrow.png'
           }
         }}
       />
-      {/* TEXT */}
+
       <UiEntity
         uiTransform={{
           width: '100%',
-          height: '100%'
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center'
         }}
-        uiText={{
-          value: props.text,
-          fontSize: props.fontSize,
-          color: ALMOST_WHITE,
-          textWrap: 'wrap',
-          textAlign: 'middle-center'
+        uiBackground={{
+          color: Color4.Black(),
+          textureMode: 'nine-slices',
+          texture: {
+            src: 'assets/images/buttonBackground100.png'
+          },
+          textureSlices: {
+            top: 0.25,
+            bottom: 0.25,
+            left: 0.25,
+            right: 0.25
+          }
         }}
-        
-      ></UiEntity>
+      >
+        {/* TEXT */}
+        <UiEntity
+          uiTransform={{
+            width: '90%',
+            height: '80%'
+          }}
+          uiText={{
+            value: props.text,
+            fontSize: props.fontSize,
+            color: ALMOST_WHITE,
+            textWrap: 'wrap',
+            textAlign: 'middle-left'
+          }}
+        />
+      </UiEntity>
     </UiEntity>
   )
 }
