@@ -1,6 +1,6 @@
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import ReactEcs, {
-  Position,
+  type Position,
   UiEntity,
   type UiTransformProps
 } from '@dcl/sdk/react-ecs'
