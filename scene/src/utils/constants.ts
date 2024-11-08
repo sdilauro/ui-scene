@@ -2,7 +2,6 @@ import { Color4 } from '@dcl/sdk/math'
 
 // PRIMARY COLORS
 export const RUBY: Color4 = Color4.create(1, 45 / 255, 85 / 255, 1)
-export const SHADOW: Color4 = Color4.create(22 / 255, 21 / 255, 24 / 255, 1)
 export const ALMOST_WHITE: Color4 = Color4.create(
   236 / 255,
   235 / 255,

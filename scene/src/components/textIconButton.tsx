@@ -28,7 +28,8 @@ function TextButton(props: {
   return (
     <UiEntity
       uiTransform={{
-        margin: BUTTON_MARGIN,
+        padding: props.fontSize * 0.3,
+        margin: { bottom: BUTTON_MARGIN, top: BUTTON_MARGIN },
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
