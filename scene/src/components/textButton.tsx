@@ -21,7 +21,6 @@ function TextButton(props: {
   // Status
   isLoading: boolean
 }): ReactEcs.JSX.Element | null {
-  
   //   const ICON_MARGIN = Math.max(canvasInfo.height * 0.01, 2)
   return (
     <UiEntity

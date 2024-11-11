@@ -33,10 +33,10 @@ export class LoadingUI {
 
   private firstButtonBackground: Color4 = RUBY
   private secondButtonBackground: Color4 = ALMOST_BLACK
-  
+
   private firstButtonLoading: boolean = false
   private secondButtonLoading: boolean = false
-  
+
   private titleText: string = ''
   private subtitleText: string = ''
   private parragraphText: string = ''
@@ -161,7 +161,7 @@ export class LoadingUI {
     }
   }
 
-  nextStep():void {
+  nextStep(): void {
     switch (this.status) {
       case 'loading':
         this.status = 'menu'
@@ -186,7 +186,7 @@ export class LoadingUI {
     await openExternalUrl({ url })
   }
 
-  onMouseEnterFirstButton():void {
+  onMouseEnterFirstButton(): void {
     console.log('enter first')
   }
 
@@ -208,6 +208,8 @@ export class LoadingUI {
 
     const LEFT_PANEL_HEIGHT: number = canvasInfo.height * 0.5
     const LEFT_PANEL_WIDTH: number = canvasInfo.width * 0.3
+    const AVATAR_PANEL_WIDTH: number = canvasInfo.height * 0.4
+    const AVATAR_PANEL_HEIGHT: number = canvasInfo.height * 0.8
 
     const HEADER_HEIGHT: number = LEFT_PANEL_HEIGHT * 0.15
     return (
@@ -221,6 +223,7 @@ export class LoadingUI {
               alignItems: 'center'
             }}
             uiBackground={{
+              // color: {...Color4.Blue(), a:1},
               textureMode: 'stretch',
               texture: {
                 src:
@@ -275,10 +278,11 @@ export class LoadingUI {
                   height: '100%',
                   justifyContent: 'center',
                   alignItems: 'flex-start',
-                  flexDirection: 'column',
-                  padding: { left: '15%' }
+                  flexDirection: 'column'
+                  // padding: { left: '15%' }
                 }}
                 uiBackground={{
+                  //  color: {...Color4.Green(), a:0.5},
                   textureMode: 'stretch',
                   texture: {
                     src: this.backgroundGradientSrc
@@ -300,6 +304,34 @@ export class LoadingUI {
                     this.fetchData()
                   }}
                 />
+                {/* AVATAR PANEL*/}
+                {this.status === 'ready-to-start' && (
+                  <UiEntity
+                    uiTransform={{
+                      positionType: 'absolute',
+                      position: { top: 0, right: '23%' },
+                      width: AVATAR_PANEL_WIDTH,
+                      height: AVATAR_PANEL_HEIGHT,
+                      flexDirection: 'column-reverse',
+                      alignItems: 'center'
+                    }}
+                    // uiBackground={{ color: { ...Color4.Green(), a: 0.5 } }}
+                  >
+                    <UiEntity
+                      uiTransform={{
+                        width: AVATAR_PANEL_WIDTH,
+                        height: AVATAR_PANEL_WIDTH * 0.37
+                      }}
+                      uiBackground={{
+                        //  color: {...Color4.Green(), a:0.5},
+                        textureMode: 'stretch',
+                        texture: {
+                          src: 'assets/images/login/Platform.png'
+                        }
+                      }}
+                    />
+                  </UiEntity>
+                )}
 
                 {/* LEFT PANEL */}
                 <UiEntity
@@ -309,9 +341,14 @@ export class LoadingUI {
                     minWidth: 480,
                     height: LEFT_PANEL_HEIGHT,
                     flexDirection: 'column',
-                    margin: { right: Math.min(canvasInfo.width * 0.2, (canvasInfo.width - LEFT_PANEL_WIDTH)/2) }
+                    margin: {
+                      left: Math.min(
+                        canvasInfo.width * 0.15,
+                        (canvasInfo.width - LEFT_PANEL_WIDTH) / 2
+                      )
+                    }
                   }}
-                  uiBackground={{ color: {...Color4.Green(), a:0.5} }}
+                  // uiBackground={{ color: { ...Color4.Red(), a: 0.5 } }}
                 >
                   {/* HEADER */}
                   <UiEntity
@@ -364,20 +401,20 @@ export class LoadingUI {
                   {/* CONTENT */}
                   <UiEntity
                     uiTransform={{
-                      width:'100%',
-                      minWidth: 480,
+                      width: '100%',
+                      minWidth: 479.9,
                       flexDirection: 'column'
                     }}
-                    uiBackground={{ color: {...Color4.Blue(), a:0.5} }}
+                    // uiBackground={{ color: {...Color4.Blue(), a:0.5} }}
                   >
                     {/* TITLE */}
 
                     <UiEntity
-                      uiBackground={{ color: {...Color4.Yellow(), a:0.5} }}
+                      // uiBackground={{ color: {...Color4.Yellow(), a:0.5} }}
                       uiTransform={{
                         display: this.titleText !== '' ? 'flex' : 'none',
                         width: '100%',
-                        // height: 'auto'
+                        height: 'auto'
                       }}
                       uiText={{
                         value: this.titleText,
@@ -388,7 +425,7 @@ export class LoadingUI {
 
                     {/* SUBTITLE */}
                     <UiEntity
-                      uiBackground={{ color: {...Color4.Purple(), a:0.5} }}
+                      // uiBackground={{ color: {...Color4.Purple(), a:0.5} }}
                       uiTransform={{
                         display: this.subtitleText !== '' ? 'flex' : 'none',
                         width: '100%',
@@ -401,10 +438,10 @@ export class LoadingUI {
                       }}
                     />
                     {/* END SUBTITLE */}
-                   
+
                     {/* PARRAGRAPH */}
                     <UiEntity
-                      uiBackground={{ color: {...Color4.Black(), a:0.5} }}
+                      // uiBackground={{ color: {...Color4.Black(), a:0.5} }}
                       uiTransform={{
                         display: this.parragraphText !== '' ? 'flex' : 'none',
                         width: '100%',
@@ -416,7 +453,7 @@ export class LoadingUI {
                         textAlign: 'middle-left'
                       }}
                     />
-                    {/* END PARRAGRAPH */}  
+                    {/* END PARRAGRAPH */}
 
                     {/* CODE SPACE */}
                     {this.status === 'secure-step' && (
@@ -427,7 +464,7 @@ export class LoadingUI {
                           alignItems: 'center',
                           flexDirection: 'column'
                         }}
-                        uiBackground={{color:Color4.Gray()}}
+                        // uiBackground={{ color:{...Color4.Gray(), a:0.5}}}
                       >
                         <UiEntity
                           uiTransform={{
@@ -511,7 +548,7 @@ export class LoadingUI {
                           ? 'center'
                           : 'flex-start'
                       }}
-                      uiBackground={{ color: Color4.Red() }}
+                      // uiBackground={{ color: {...Color4.Red(), a:0.2} }}
                     >
                       {/* SPINNER */}
                       {this.isSpinnerVisible && (
@@ -540,8 +577,12 @@ export class LoadingUI {
                               this.nextStep()
                             }, 200)
                           }}
-                          onMouseEnter={()=>this.firstButtonBackground = CLICKED_PRIMARY_COLOR}
-                          onMouseLeave={()=>this.firstButtonBackground = RUBY}
+                          onMouseEnter={() =>
+                            (this.firstButtonBackground = CLICKED_PRIMARY_COLOR)
+                          }
+                          onMouseLeave={() =>
+                            (this.firstButtonBackground = RUBY)
+                          }
                           value={this.firstButtonText}
                           fontSize={BUTTON_FONT_SIZE}
                         />
@@ -555,25 +596,29 @@ export class LoadingUI {
                           }}
                           backgroundColor={this.secondButtonBackground}
                           isLoading={this.secondButtonLoading}
-                          
                           onMouseDown={() => {
-                            if (this.status === 'ready-to-start' ){
-                            this.toastOpen = false
-                            utils.timers.setTimeout(() => {
-                              this.status = 'secure-step'
-                              this.updateLayout()
-                            }, 200)
-                          }}}
-                          onMouseEnter={()=>this.secondButtonBackground = Color4.Gray()}
-                          onMouseLeave={()=>this.secondButtonBackground = ALMOST_BLACK}
+                            if (this.status === 'ready-to-start') {
+                              this.toastOpen = false
+                              utils.timers.setTimeout(() => {
+                                this.status = 'secure-step'
+                                this.updateLayout()
+                              }, 200)
+                            }
+                          }}
+                          onMouseEnter={() =>
+                            (this.secondButtonBackground = Color4.Gray())
+                          }
+                          onMouseLeave={() =>
+                            (this.secondButtonBackground = ALMOST_BLACK)
+                          }
                           value={this.secondButtonText}
                           fontSize={BUTTON_FONT_SIZE}
                         />
                       )}
-                      </UiEntity>
+                    </UiEntity>
                     {/* END BUTTONS & SPINNER */}
                   </UiEntity>
-                </UiEntity>             
+                </UiEntity>
               </UiEntity>
             )}
           </UiEntity>
