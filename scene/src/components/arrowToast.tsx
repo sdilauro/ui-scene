@@ -11,7 +11,7 @@ function ArrowToast(props: {
   uiTransform: UiTransformProps
   text: string
   fontSize: number
-  arrowSide: 'left' | 'right' | 'top' | 'bottom'
+  arrowSide: 'left' | 'right' | 'top' | 'bottom' | 'none'
 }): ReactEcs.JSX.Element | null {
   const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
   if (canvasInfo === null) return null
@@ -31,27 +31,29 @@ function ArrowToast(props: {
             : 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        margin: { left: props.fontSize },
+        margin: { left: props.fontSize},
         ...props.uiTransform
       }}
     >
       {/* ARROW */}
 
-      <UiEntity
-        uiTransform={{
-          width: props.fontSize * 2,
-          height: props.fontSize * 2,
-          positionType: 'absolute',
-          position
-        }}
-        uiBackground={{
-          color: Color4.Black(),
-          textureMode: 'stretch',
-          texture: {
-            src: 'assets/images/toastArrow.png'
-          }
-        }}
-      />
+      {props.arrowSide != 'none' && (
+        <UiEntity
+          uiTransform={{
+            width: props.fontSize * 2,
+            height: props.fontSize * 2,
+            positionType: 'absolute',
+            position
+          }}
+          uiBackground={{
+            color: Color4.Black(),
+            textureMode: 'stretch',
+            texture: {
+              src: 'assets/images/toastArrow.png'
+            }
+          }}
+        />
+      )}
 
       <UiEntity
         uiTransform={{
@@ -78,7 +80,8 @@ function ArrowToast(props: {
         <UiEntity
           uiTransform={{
             width: '90%',
-            height: '80%'
+            height: '80%',
+            padding: {right: props.fontSize},
           }}
           uiText={{
             value: props.text,

@@ -11,9 +11,9 @@ export function main(): void {
 
 async function init(retry: boolean): Promise<void> {
   gameInstance = new GameController()
-  gameInstance.uiController.loadingUI.startLoading()
+  gameInstance.uiController.loadingAndLogin.startLoading()
 
   // // UI
   // gameInstance.uiController.loadingUI.finishLoading()
-  gameInstance.uiController.showBottomButtons()
+  // gameInstance.uiController.showBottomButtons()
 }

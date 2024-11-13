@@ -1,22 +1,21 @@
 import ReactEcs, { ReactEcsRenderer, UiEntity } from '@dcl/sdk/react-ecs'
 import { LoadingUI } from '../ui/loading-and-login/loading'
 import { type GameController } from './game.controller'
-import { type MainHudController } from './mainhud'
-// import Canvas from '../ui/canvas/canvas'
-// import * as ui from 'dcl-ui-toolkit'
+import { MainHud } from '../ui/main-hud/mainHud'
 import { BottomButtonsController } from './bottomButtons'
 
 export class UIController {
-  loadingUI: LoadingUI
+  loadingAndLogin: LoadingUI
   // Banner
   gameController: GameController
 
-  mainHud: MainHudController | null = null
+  mainHud: MainHud | null = null
   bottomButtons: BottomButtonsController | null = null
 
   constructor(gameController: GameController) {
     this.gameController = gameController
-    this.loadingUI = new LoadingUI(this)
+    this.loadingAndLogin = new LoadingUI(this)
+    this.mainHud = new MainHud(this)
 
     ReactEcsRenderer.setUiRenderer(this.ui.bind(this))
   }
@@ -29,9 +28,9 @@ export class UIController {
     return (
       <UiEntity>
         {/* Bottom Buttons */}
-        {this.bottomButtons?.render()}
+        {this.mainHud?.mainUi()}
         {/* Loading & Login */}
-        {this.loadingUI?.mainUi()}
+        {/* {this.loadingAndLogin?.mainUi()} */}
       </UiEntity>
     )
   }
