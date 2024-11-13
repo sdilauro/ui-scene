@@ -31,7 +31,7 @@ function ArrowToast(props: {
             : 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        margin: { left: props.fontSize},
+        margin: { left: props.fontSize },
         ...props.uiTransform
       }}
     >
@@ -81,7 +81,7 @@ function ArrowToast(props: {
           uiTransform={{
             width: '90%',
             height: '80%',
-            padding: {right: props.fontSize},
+            padding: { right: props.fontSize }
           }}
           uiText={{
             value: props.text,

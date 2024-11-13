@@ -53,16 +53,16 @@ function IconButton(props: {
       <UiEntity
         uiTransform={{
           width: '70%',
-          height: '70%', 
-          flexDirection:'row',
-          alignItems:'center'
+          height: '70%',
+          flexDirection: 'row',
+          alignItems: 'center'
         }}
         uiBackground={{
           textureMode: 'stretch',
           texture: { src: props.iconSrc }
         }}
       />
-      {(props.showHint && props.hintText) && (
+      {props.showHint && props.hintText && (
         <ArrowToast
           uiTransform={{
             width: 'auto',
