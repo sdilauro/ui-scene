@@ -8,6 +8,7 @@ import { BackpackPage } from '../backpack-page'
 import Canvas from '../canvas/canvas'
 import { MapPage } from '../map-page'
 import { SettingsPage } from '../settings-page'
+import TextIconButton from '../../components/textIconButton'
 
 export type MenuPage = 'map' | 'backpack' | 'settings'
 const SELECTED_BUTTON_COLOR: Color4 = { ...Color4.Gray(), a: 0.3 }
@@ -19,11 +20,7 @@ export class MainMenu {
   private mapIcon: string = 'assets/images/navbar/Map off.png'
   private settingsIcon: string = 'assets/images/navbar/Settings off.png'
 
-  private closeButtonColor: Color4 = ALMOST_BLACK
-
-  private backpackHint: boolean = false
-  private mapHint: boolean = false
-  private settingsHint: boolean = false
+  private closeButtonColor: Color4 = Color4.Black()
 
   private backpackBackground: Color4 = Color4.create(0, 0, 0, 0)
   private mapBackground: Color4 = Color4.create(0, 0, 0, 0)
@@ -36,40 +33,31 @@ export class MainMenu {
   mapEnter(): void {
     this.mapIcon = 'assets/images/navbar/Map on.png'
     this.mapBackground = SELECTED_BUTTON_COLOR
-    this.mapHint = true
     console.log('on mouse enter map')
   }
 
   mapLeave(): void {
     this.updateButtons()
-    this.mapHint = false
     console.log('on mouse leave map')
   }
 
   backpackEnter(): void {
     this.backpackIcon = 'assets/images/navbar/Backpack on.png'
     this.backpackBackground = SELECTED_BUTTON_COLOR
-    this.backpackHint = true
-    console.log('on mouse enter backpack')
   }
 
   backpackLeave(): void {
     this.updateButtons()
-    this.backpackHint = false
-    console.log('on mouse leave backpack')
   }
 
   settingsEnter(): void {
     this.settingsIcon = 'assets/images/navbar/Settings on.png'
     this.settingsBackground = SELECTED_BUTTON_COLOR
-    this.settingsHint = true
     console.log('on mouse enter settings')
   }
 
   settingsLeave(): void {
     this.updateButtons()
-    this.settingsHint = false
-    console.log('on mouse leave settings')
   }
 
   hide(): void {
@@ -83,7 +71,8 @@ export class MainMenu {
     this.updateButtons()
   }
 
-  updateButtons(){
+
+  updateButtons():void {
     this.settingsIcon = 'assets/images/navbar/Settings off.png'
     this.settingsBackground = Color4.create(0, 0, 0, 0)
     this.backpackIcon = 'assets/images/navbar/Backpack off.png'
@@ -91,27 +80,27 @@ export class MainMenu {
     this.mapIcon = 'assets/images/navbar/Map off.png'
     this.mapBackground = Color4.create(0, 0, 0, 0)
     switch (this.activePage) {
-        case 'settings':
-          this.settingsIcon = 'assets/images/navbar/Settings on.png'
-          this.settingsBackground = SELECTED_BUTTON_COLOR
-          break
-        case 'map':
-          this.mapIcon = 'assets/images/navbar/Map on.png'
-          this.mapBackground = SELECTED_BUTTON_COLOR
-          break
-        case 'backpack':
-          this.backpackIcon = 'assets/images/navbar/Backpack on.png'
-          this.backpackBackground = SELECTED_BUTTON_COLOR
-      }
-
+      case 'settings':
+        this.settingsIcon = 'assets/images/navbar/Settings on.png'
+        this.settingsBackground = SELECTED_BUTTON_COLOR
+        break
+      case 'map':
+        this.mapIcon = 'assets/images/navbar/Map on.png'
+        this.mapBackground = SELECTED_BUTTON_COLOR
+        break
+      case 'backpack':
+        this.backpackIcon = 'assets/images/navbar/Backpack on.png'
+        this.backpackBackground = SELECTED_BUTTON_COLOR
+    }
   }
 
   mainUi(): ReactEcs.JSX.Element | null {
+    this.updateButtons()
     const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
     if (canvasInfo === null) return null
 
     const sideBarHeight: number = Math.max(canvasInfo.height * 0.024, 46)
-    const buttonSize: number = sideBarHeight * 0.9
+    const buttonSize: number = Math.max(canvasInfo.height * 0.024, 46)
 
     return (
       <Canvas>
@@ -131,7 +120,7 @@ export class MainMenu {
           <UiEntity
             uiTransform={{
               width: '100%',
-              height: '10%',
+              height: '8%',
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'row'
@@ -143,14 +132,18 @@ export class MainMenu {
             <UiEntity
               uiTransform={{
                 width: '100%',
-                height: 'auto',
+                height: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'row'
               }}
             >
-              <IconButton
-                uiTransform={{ height: buttonSize, width: buttonSize }}
+              <TextIconButton
+                uiTransform={{
+                  height: '90%',
+                  width: 4 * buttonSize,
+                  margin: { left: 5, right: 5 }
+                }}
                 onMouseEnter={() => {
                   this.mapEnter()
                 }}
@@ -162,12 +155,18 @@ export class MainMenu {
                 }}
                 backgroundColor={this.mapBackground}
                 iconSrc={this.mapIcon}
-                hintText={'Map [M]'}
-                showHint={this.mapHint}
+                value={'MAP [M]'}
+                fontSize={10}
+                iconSize={50}
+                direction={'column'}
               />
 
-              <IconButton
-                uiTransform={{ height: buttonSize, width: buttonSize }}
+              <TextIconButton
+                uiTransform={{
+                    height: '90%',
+                    width: 4 * buttonSize,
+                  margin: { left: 5, right: 5 }
+                }}
                 onMouseEnter={() => {
                   this.backpackEnter()
                 }}
@@ -179,12 +178,18 @@ export class MainMenu {
                 }}
                 backgroundColor={this.backpackBackground}
                 iconSrc={this.backpackIcon}
-                hintText={'Backpack'}
-                showHint={this.backpackHint}
+                value={'BACKPACK [B]'}
+                fontSize={10}
+                iconSize={50}
+                direction={'column'}
               />
 
-              <IconButton
-                uiTransform={{ height: buttonSize, width: buttonSize }}
+              <TextIconButton
+                uiTransform={{
+                    height: '90%',
+                    width: 4 * buttonSize,
+                  margin: { left: 5, right: 5 }
+                }}
                 onMouseEnter={() => {
                   this.settingsEnter()
                 }}
@@ -196,24 +201,26 @@ export class MainMenu {
                 }}
                 backgroundColor={this.settingsBackground}
                 iconSrc={this.settingsIcon}
-                hintText={'Settings'}
-                showHint={this.settingsHint}
+                value={'SETTINGS [P]'}
+                fontSize={10}
+                iconSize={50}
+                direction={'column'}
               />
             </UiEntity>
 
             <IconButton
               onMouseEnter={() => {
-                this.closeButtonColor = Color4.Gray()
+                this.closeButtonColor = ALMOST_BLACK
               }}
               onMouseLeave={() => {
-                this.closeButtonColor = ALMOST_BLACK
+                this.closeButtonColor = Color4.Black()
               }}
               onMouseDown={() => {
                 this.hide()
               }}
               uiTransform={{
-                width: 20,
-                height: 20,
+                width: buttonSize,
+                height: buttonSize,
                 positionType: 'absolute',
                 position: { right: 45 }
               }}

@@ -17,17 +17,19 @@ function TextIconButton(props: {
   // Text
   value: string
   fontSize: number
+  iconSrc: string
+  iconSize?: number
   fontColor?: Color4
   iconColor?: Color4
-  iconSrc: string
+  direction?: 'row' | 'column'
 }): ReactEcs.JSX.Element | null {
   //   const ICON_MARGIN = Math.max(canvasInfo.height * 0.01, 2)
   return (
     <UiEntity
       uiTransform={{
-        padding: props.fontSize * 0.3,
-        margin: { bottom: props.fontSize * 0.3, top: props.fontSize * 0.3 },
-        flexDirection: 'row',
+        // padding: props.fontSize * 0.3,
+        // margin: { bottom: props.fontSize * 0.3, top: props.fontSize * 0.3 },
+        flexDirection: props.direction ?? 'row',
         justifyContent: 'center',
         alignItems: 'center',
         ...props.uiTransform
@@ -54,8 +56,8 @@ function TextIconButton(props: {
 
       <UiEntity
         uiTransform={{
-          width: 2 * props.fontSize,
-          height: 2 * props.fontSize
+          width: props.iconSize ?? 2 * props.fontSize,
+          height: props.iconSize ?? 2 * props.fontSize
         }}
         uiBackground={{
           textureMode: 'stretch',

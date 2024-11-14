@@ -2,7 +2,7 @@ import { Color4 } from '@dcl/ecs-math'
 import ReactEcs, { UiEntity } from '@dcl/react-ecs'
 import { UiCanvasInformation, engine } from '@dcl/sdk/ecs'
 import TextIconButton from '../../components/textIconButton'
-import { ALMOST_BLACK, ALMOST_WHITE } from '../../utils/constants'
+import { ALMOST_BLACK, ALMOST_WHITE, ORANGE } from '../../utils/constants'
 
 export class SettingsPage {
   private generalTextColor: Color4 = ALMOST_BLACK
@@ -13,8 +13,48 @@ export class SettingsPage {
   private graphicsBackgroundColor: Color4 = ALMOST_WHITE
   private audioBackgroundColor: Color4 = ALMOST_WHITE
   private controlsBackgroundColor: Color4 = ALMOST_WHITE
+  private pathText: string = ''
+  private buttonClicked: 'general'|'audio'|'graphics'|'controls' = 'general'
+
+  setButtonClicked(button: 'general'|'audio'|'graphics'|'controls'):void{
+    this.buttonClicked = button
+    this.pathText = 'Settings/'+button
+  }
+
+  updateButtons() {
+    this.generalBackgroundColor = ALMOST_WHITE
+    this.graphicsBackgroundColor = ALMOST_WHITE
+    this.audioBackgroundColor = ALMOST_WHITE
+    this.controlsBackgroundColor = ALMOST_WHITE
+    this.generalTextColor = ALMOST_BLACK
+    this.graphicsTextColor = ALMOST_BLACK
+    this.audioTextColor = ALMOST_BLACK
+    this.controlsTextColor = ALMOST_BLACK
+
+    switch (this.buttonClicked) {
+      case 'general':
+        this.generalBackgroundColor = ORANGE
+        this.generalTextColor = ALMOST_WHITE
+        break
+      case 'audio':
+        this.audioBackgroundColor = ORANGE
+        this.audioTextColor = ALMOST_WHITE
+        break
+      case 'graphics':
+        this.graphicsBackgroundColor = ORANGE
+        this.graphicsTextColor = ALMOST_WHITE
+        break
+      case 'controls':
+        this.controlsBackgroundColor = ORANGE
+        this.controlsTextColor = ALMOST_WHITE
+        break
+    }
+  }
+
+
 
   mainUi(): ReactEcs.JSX.Element | null {
+    this.updateButtons()
     const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
     if (canvasInfo === null) return null
 
@@ -27,7 +67,7 @@ export class SettingsPage {
           justifyContent: 'flex-start'
         }}
         uiText={{
-          value: 'Settings',
+          value: this.pathText,
           textAlign: 'middle-center',
           fontSize: 50
         }}
@@ -58,22 +98,24 @@ export class SettingsPage {
           <TextIconButton
             uiTransform={{
               margin: { left: 10, right: 10 },
+              padding:{left:10, right:10},
               width: 'auto'
             }}
-            iconColor={this.graphicsTextColor}
+            iconColor={this.generalTextColor}
             iconSrc={'assets/images/navbar/Settings off.png'}
             value={'General'}
             fontSize={16}
             fontColor={this.generalTextColor}
             onMouseEnter={() => {}}
             onMouseLeave={() => {}}
-            onMouseDown={() => {}}
+            onMouseDown={() => {this.setButtonClicked('general')}}
             backgroundColor={this.generalBackgroundColor}
           />
 
           <TextIconButton
             uiTransform={{
               margin: { left: 10, right: 10 },
+              padding:{left:10, right:10},
               width: 'auto'
             }}
             iconColor={this.graphicsTextColor}
@@ -83,12 +125,13 @@ export class SettingsPage {
             fontColor={this.graphicsTextColor}
             onMouseEnter={() => {}}
             onMouseLeave={() => {}}
-            onMouseDown={() => {}}
+            onMouseDown={() => {this.setButtonClicked('graphics')}}
             backgroundColor={this.graphicsBackgroundColor}
           />
           <TextIconButton
             uiTransform={{
               margin: { left: 10, right: 10 },
+              padding:{left:10, right:10},
               width: 'auto'
             }}
             iconColor={this.audioTextColor}
@@ -98,23 +141,24 @@ export class SettingsPage {
             fontColor={this.audioTextColor}
             onMouseEnter={() => {}}
             onMouseLeave={() => {}}
-            onMouseDown={() => {}}
+            onMouseDown={() => {this.setButtonClicked('audio')}}
             backgroundColor={this.audioBackgroundColor}
           />
 
           <TextIconButton
             uiTransform={{
               margin: { left: 10, right: 10 },
+              padding:{left:10, right:10},
               width: 'auto'
             }}
             iconColor={this.controlsTextColor}
-            iconSrc={'assets/images/icons/ControlsIcn.png'}
+            iconSrc={'assets/images/builder/ControlsIcn.png'}
             value={'Controls'}
             fontSize={16}
             fontColor={this.controlsTextColor}
             onMouseEnter={() => {}}
             onMouseLeave={() => {}}
-            onMouseDown={() => {}}
+            onMouseDown={() => {this.setButtonClicked('controls')}}
             backgroundColor={this.controlsBackgroundColor}
           />
         </UiEntity>
