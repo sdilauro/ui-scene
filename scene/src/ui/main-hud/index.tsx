@@ -201,7 +201,7 @@ export class MainHud {
           uiTransform={{
             width: '2.4%',
             height: '100%',
-            position: { left: 0, top: 0 },
+            position: { left: 270, top: 0 },
             positionType: 'absolute'
           }}
           // onMouseEnter={() => (this.isSideBarVisible = true)}
@@ -282,7 +282,7 @@ export class MainHud {
                 }}
                 backgroundColor={this.mapBackground}
                 iconSrc={this.mapIcon}
-                hintText={'Map [M]'}
+                hintText={'Map'}
                 showHint={this.mapHint}
               />
 
