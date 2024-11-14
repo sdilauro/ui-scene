@@ -29,15 +29,9 @@ export class MainMenu {
   private mapBackground: Color4 = Color4.create(0, 0, 0, 0)
   private settingsBackground: Color4 = Color4.create(0, 0, 0, 0)
 
-  private settingsPage :  SettingsPage
-  private backpackPage : BackpackPage
-  private mapPage : MapPage
-
   constructor(uiController: UIController) {
     this.uiController = uiController
-    this.settingsPage = new SettingsPage()
-    this.backpackPage = new BackpackPage()
-    this.mapPage = new MapPage()
+
   }
 
   mapEnter(): void {
@@ -218,13 +212,13 @@ export class MainMenu {
             >
             
             {this.activePage === 'map' && (
-                this.mapPage.mainUi()
+                this.uiController.mapPage.mainUi()
             )}
             {this.activePage === 'backpack' && (
-                this.backpackPage.mainUi()
+                this.uiController.backpackPage.mainUi()
             )}
             {this.activePage === 'settings' && (
-                this.settingsPage.mainUi()
+                this.uiController.settingsPage.mainUi()
             )}
             
             </UiEntity>
