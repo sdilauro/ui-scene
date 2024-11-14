@@ -17,9 +17,9 @@ export class MainHud {
   private mapIcon: string = 'assets/images/navbar/Map off.png'
   private settingsIcon: string = 'assets/images/navbar/Settings off.png'
   private helpIcon: string = 'assets/images/navbar/HelpIcon Off.png'
-  private friendsIcon: string = 'assets/images/navbar/Friends off.png'
-  private cameraIcon: string = 'assets/images/navbar/Camera Off.png'
-  private experiencesIcon: string = 'assets/images/navbar/ExperienceIconOff.png'
+  // private friendsIcon: string = 'assets/images/navbar/Friends off.png'
+  // private cameraIcon: string = 'assets/images/navbar/Camera Off.png'
+  // private experiencesIcon: string = 'assets/images/navbar/ExperienceIconOff.png'
   private emotesIcon: string = 'assets/images/navbar/Emote off.png'
 
   private bellHint: boolean = false
@@ -28,9 +28,9 @@ export class MainHud {
   private mapHint: boolean = false
   private settingsHint: boolean = false
   private helpHint: boolean = false
-  private friendsHint: boolean = false
-  private cameraHint: boolean = false
-  private experiencesHint: boolean = false
+  // private friendsHint: boolean = false
+  // private cameraHint: boolean = false
+  // private experiencesHint: boolean = false
   private emotesHint: boolean = false
 
   private bellBackground: Color4 = Color4.create(0, 0, 0, 0)
@@ -39,9 +39,9 @@ export class MainHud {
   private mapBackground: Color4 = Color4.create(0, 0, 0, 0)
   private settingsBackground: Color4 = Color4.create(0, 0, 0, 0)
   private helpBackground: Color4 = Color4.create(0, 0, 0, 0)
-  private friendsBackground: Color4 = Color4.create(0, 0, 0, 0)
-  private cameraBackground: Color4 = Color4.create(0, 0, 0, 0)
-  private experiencesBackground: Color4 = Color4.create(0, 0, 0, 0)
+  // private friendsBackground: Color4 = Color4.create(0, 0, 0, 0)
+  // private cameraBackground: Color4 = Color4.create(0, 0, 0, 0)
+  // private experiencesBackground: Color4 = Color4.create(0, 0, 0, 0)
   private emotesBackground: Color4 = Color4.create(0, 0, 0, 0)
 
   constructor(uiController: UIController) {
@@ -278,7 +278,7 @@ export class MainHud {
                   this.mapLeave()
                 }}
                 onMouseDown={() => {
-                  console.log('clicked')
+                  this.uiController.menu?.show('map')
                 }}
                 backgroundColor={this.mapBackground}
                 iconSrc={this.mapIcon}
@@ -295,7 +295,7 @@ export class MainHud {
                   this.backpackLeave()
                 }}
                 onMouseDown={() => {
-                  console.log('clicked')
+                  this.uiController.menu?.show('backpack')
                 }}
                 backgroundColor={this.backpackBackground}
                 iconSrc={this.backpackIcon}
@@ -312,7 +312,7 @@ export class MainHud {
                   this.settingsLeave()
                 }}
                 onMouseDown={() => {
-                  this.uiController.showSettingsMenu()
+                  this.uiController.menu?.show('settings')
                 }}
                 backgroundColor={this.settingsBackground}
                 iconSrc={this.settingsIcon}
