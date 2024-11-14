@@ -6,37 +6,35 @@ import ReactEcs, {
   type UiTransformProps
 } from '@dcl/sdk/react-ecs'
 
-function TextButton(props: {
+function TextIconButton(props: {
+  // Events
+  onMouseEnter: Callback
+  onMouseLeave: Callback
+  onMouseDown: Callback
+  // Shape
   uiTransform: UiTransformProps
-  normalColor: Color4
-  // hoverColor: Color4
-  clickedColor: Color4
-  isClicked: boolean
-  iconSrc: string
-  iconColor: Color4
-  callback: Callback
-  text: string
+  backgroundColor: Color4
+  // Text
+  value: string
   fontSize: number
-  textColor?: Color4
+  fontColor?: Color4
+  iconColor?: Color4
+  iconSrc: string
 }): ReactEcs.JSX.Element | null {
-  const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
-  if (canvasInfo === null) return null
-
-  const BUTTON_MARGIN = Math.max(canvasInfo.height * 0.01, 2.5)
   //   const ICON_MARGIN = Math.max(canvasInfo.height * 0.01, 2)
-
   return (
     <UiEntity
       uiTransform={{
         padding: props.fontSize * 0.3,
-        margin: { bottom: BUTTON_MARGIN, top: BUTTON_MARGIN },
+        margin: { bottom: props.fontSize * 0.3, top: props.fontSize * 0.3 },
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         ...props.uiTransform
       }}
       uiBackground={{
-        color: props.isClicked ? props.clickedColor : props.normalColor,
+        color: props.backgroundColor,
+
         textureMode: 'nine-slices',
         texture: {
           src: 'assets/images/buttonBackground100.png'
@@ -48,7 +46,9 @@ function TextButton(props: {
           right: 0.25
         }
       }}
-      onMouseDown={props.callback}
+      onMouseDown={props.onMouseDown}
+      onMouseEnter={props.onMouseEnter}
+      onMouseLeave={props.onMouseLeave}
     >
       {/* ICON */}
 
@@ -70,13 +70,13 @@ function TextButton(props: {
           height: 'auto'
         }}
         uiText={{
-          value: props.text,
+          value: props.value,
           fontSize: props.fontSize,
-          color: props.textColor ?? Color4.White()
+          color: props.fontColor ?? Color4.White()
         }}
-      />
+      ></UiEntity>
     </UiEntity>
   )
 }
 
-export default TextButton
+export default TextIconButton

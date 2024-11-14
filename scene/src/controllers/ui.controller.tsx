@@ -8,13 +8,12 @@ import { MapPage } from '../ui/map-page'
 import { SettingsPage } from '../ui/settings-page'
 
 export class UIController {
-
   public isMainMenuVisible: boolean = true
-  public settingsPage :  SettingsPage
-  public backpackPage : BackpackPage
-  public mapPage : MapPage
+  public settingsPage: SettingsPage
+  public backpackPage: BackpackPage
+  public mapPage: MapPage
   loadingAndLogin: LoadingUI
-  
+
   gameController: GameController
 
   mainHud: MainHud | null = null

@@ -7,19 +7,17 @@ export class MapPage {
     const canvasInfo = UiCanvasInformation.getOrNull(engine.RootEntity)
     if (canvasInfo === null) return null
     return (
-        <UiEntity
-          uiTransform={{
-            width: '100%',
-            height: '100%',
-          }}
-          uiText={{
-            value: 'Map',
-            textAlign: 'middle-center',
-            fontSize: 50
-          }}
-        >
-        </UiEntity>
-     
+      <UiEntity
+        uiTransform={{
+          width: '100%',
+          height: '100%'
+        }}
+        uiText={{
+          value: 'Map',
+          textAlign: 'middle-center',
+          fontSize: 50
+        }}
+      ></UiEntity>
     )
   }
 }
