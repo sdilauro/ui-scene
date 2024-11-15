@@ -367,23 +367,24 @@ export class LoadingUI {
                         display: this.isBackButtonVisible ? 'flex' : 'none',
                         width: BUTTON_WIDTH / 3
                       }}
-                      normalColor={ALMOST_WHITE}
-                      clickedColor={ALMOST_WHITE}
-                      isClicked={false}
+
                       iconColor={RUBY}
                       iconSrc={'assets/images/icons/LeftArrow.png'}
-                      callback={() => {
+                      onMouseDown={() => {
                         console.log('click back')
                         utils.timers.setTimeout(() => {
                           this.status = 'menu'
                           this.updateLayout()
                           this.toastOpen = false
                         }, 100)
-                      }}
-                      text={'BACK'}
+                      } }
+                      value={'BACK'}
                       fontSize={BUTTON_FONT_SIZE * 0.7}
-                      textColor={Color4.Black()}
-                    />
+                      fontColor={ALMOST_BLACK} onMouseEnter={function (): void {
+                        throw new Error('Function not implemented.')
+                      } } onMouseLeave={function (): void {
+                        throw new Error('Function not implemented.')
+                      } } backgroundColor={ALMOST_WHITE}                    />
                     {/* LOGO DECENTRALAND */}
                     <UiEntity
                       uiTransform={{
